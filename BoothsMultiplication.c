@@ -138,7 +138,6 @@ void binary_addition(){
 	system("cls");
 	printf("\n\n\n\t\t\t\t----   Binary Addition   ----");
 	
-	printf("\n\n\t\t\t%s + %s = %s", numb_1, numb_2, numb_add);
 }
 
 void booths_multiplication(){
