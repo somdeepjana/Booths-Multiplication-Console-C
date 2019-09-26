@@ -23,39 +23,20 @@ void welcome(){
 	getch();
 }
 //error code==0 means length not matched, code== -1 user entry is other than 0 or 1, code==2 means programmer error...............
-int number_check(int number_to_check){
-	
+int number_check(char *number_to_check){
 	int temp= 0, checked_length=0;
-	if(number_to_check==1){
-		while(numb_1[temp]!= '\0'){
-			if(numb_1[temp]== '1' || numb_1[temp]== '0'){
-				checked_length++;
-			}else{
-				return -1;
-			}
-			temp++;
-		}
-		if(checked_length== strlen(numb_1)){
-			return 1;
+	while(number_to_check[temp]!= '\0'){
+		if(number_to_check[temp]== '1' || number_to_check[temp]== '0'){
+			checked_length++;
 		}else{
-			return 0;
+			return -1;
 		}
-	}else if(number_to_check== 2){
-		while(numb_2[temp]!= '\0'){
-			if(numb_2[temp]== '1' || numb_2[temp]== '0'){
-				checked_length++;
-			}else{
-				return -1;
-			}
-			temp++;
-		}
-		if(checked_length== strlen(numb_2)){
-			return 1;
-		}else{
-			return 0;
-		}
+		temp++;
+	}
+	if(checked_length== strlen(number_to_check)){
+		return 1;
 	}else{
-		return 2;
+		return 0;
 	}
 }
 
@@ -91,13 +72,17 @@ void make_same_length(){
 //loading number into...........................................................................
 void load_number(){
 	
+	int temp_chek_code;
+	
 	system("cls");
 	printf("\n\n\n\t\t\t\t----   Loading Binary Number   ----");
 	printf("\n\n\t\t01. Enter the First Number: ");
 	for(;;){
 		fflush(stdin);
 		scanf("%s", numb_1);
-		if(number_check(1)==1&& strlen(numb_1)>0){
+		printf("\ncode cheaking 1....");
+		temp_chek_code = number_check(numb_1);
+		if(temp_chek_code==1&& strlen(numb_1)>0){
 			printf("\n\n\t\t\t\t----   Verifying First Number   ----");
 			printf("\n\n\t\t\tEntered Number: %s", numb_1);
 			printf("\n\t\tEnter to proceed with the number or any other key to tryAgain....");
@@ -107,7 +92,7 @@ void load_number(){
 				printf("\n\t\tEnter Again: ");
 			}
 		}else{
-			printf("\n\t\tWrong entry TryAgain[error code: %d]: ", number_check(1));
+			printf("\n\t\tWrong entry TryAgain[error code: %d]: ", temp_chek_code);
 		}
 	}
 	
@@ -115,7 +100,8 @@ void load_number(){
 	for(;;){
 		fflush(stdin);
 		scanf("%s", numb_2);
-		if(number_check(2)==1&& strlen(numb_2)>0){
+		temp_chek_code = number_check(numb_2);
+		if(temp_chek_code==1&& strlen(numb_2)>0){
 			printf("\n\n\t\t\t\t----   Verifying First Number   ----");
 			printf("\n\n\t\t\tEntered Number: %s", numb_2);
 			printf("\n\t\tEnter to proceed with the number or any other key to tryAgain....");
@@ -125,7 +111,7 @@ void load_number(){
 				printf("\n\t\tEnter Again: ");
 			}
 		}else{
-			printf("\n\t\tWrong entry TryAgain[error code: %d]: ", number_check(2));
+			printf("\n\t\tWrong entry TryAgain[error code: %d]: ", temp_chek_code);
 		}
 	}
 	
