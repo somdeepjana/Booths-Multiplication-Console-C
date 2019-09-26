@@ -23,73 +23,60 @@ void welcome(){
 	getch();
 }
 //error code==0 means length not matched, code== -1 user entry is other than 0 or 1, code==2 means programmer error...............
-int number_check(int number_to_check){
-	
+int number_check(char *number_to_check){
 	int temp= 0, checked_length=0;
-	if(number_to_check==1){
-		while(numb_1[temp]!= '\0'){
-			if(numb_1[temp]== '1' || numb_1[temp]== '0'){
-				checked_length++;
-			}else{
-				return -1;
-			}
-			temp++;
-		}
-		if(checked_length== strlen(numb_1)){
-			return 1;
+	while(number_to_check[temp]!= '\0'){
+		if(number_to_check[temp]== '1' || number_to_check[temp]== '0'){
+			checked_length++;
 		}else{
-			return 0;
+			return -1;
 		}
-	}else if(number_to_check== 2){
-		while(numb_2[temp]!= '\0'){
-			if(numb_2[temp]== '1' || numb_2[temp]== '0'){
-				checked_length++;
-			}else{
-				return -1;
-			}
-			temp++;
-		}
-		if(checked_length== strlen(numb_2)){
-			return 1;
-		}else{
-			return 0;
-		}
+		temp++;
+	}
+	if(checked_length== strlen(number_to_check)){
+		return 1;
 	}else{
-		return 2;
+		return 0;
 	}
 }
 
-//making both the numbers same width..................................
-void make_same_length(){
+//changing the number to required length[returns commited digit change length]......................................................
+int change_numb_length(char *number_to_change, int length){
 	
-	int i, i_2;
-	if(strlen(numb_1)>strlen(numb_2)){
-		i_2= strlen(numb_2)-1;
-		for(i=strlen(numb_1)-1; i>=0; i--){
-			if(i_2>=0){
-				numb_2[i]= numb_2[i_2--];
-			}else{
-				numb_2[i]= '0';
-			}
+	int i, i_2, commited_change= 0;
+	
+	i_2= strlen(number_to_change);
+	for(i=length; i>=0; i--){
+		if(i_2>=0){
+			number_to_change[i]= number_to_change[i_2--];
+		}else{
+			number_to_change[i]= '0';
+			commited_change++;
 		}
-		numb_2[strlen(numb_1)]= '\0';
-		binary_digit= strlen(numb_1);
+	}
+	return commited_change;
+}
+
+//making both the numbers same width[returns the numbers length]...........................................................
+int make_same_length(char *number_to_change_1, char *number_to_change_2){
+	
+	if(strlen(number_to_change_1)>strlen(number_to_change_2)){
+		
+		int greater_numb_length= strlen(number_to_change_1);
+		
+		change_numb_length(number_to_change_2, greater_numb_length);
+		return greater_numb_length;
+	}else if(strlen(number_to_change_1)!=strlen(number_to_change_2)){
+		return make_same_length(number_to_change_2, number_to_change_1);
 	}else{
-		i_2= strlen(numb_1)-1;
-		for(i=strlen(numb_2)-1; i>=0; i--){
-			if(i_2>=0){
-				numb_1[i]= numb_1[i_2--];
-			}else{
-				numb_1[i]= '0';
-			}
-		}
-		numb_1[strlen(numb_2)]= '\0';
-		binary_digit= strlen(numb_2);
+		return strlen(number_to_change_1);
 	}
 }
 
 //loading number into...........................................................................
 void load_number(){
+	
+	int temp_chek_code;
 	
 	system("cls");
 	printf("\n\n\n\t\t\t\t----   Loading Binary Number   ----");
@@ -97,7 +84,8 @@ void load_number(){
 	for(;;){
 		fflush(stdin);
 		scanf("%s", numb_1);
-		if(number_check(1)==1&& strlen(numb_1)>0){
+		temp_chek_code = number_check(numb_1);
+		if(temp_chek_code==1&& strlen(numb_1)>0){
 			printf("\n\n\t\t\t\t----   Verifying First Number   ----");
 			printf("\n\n\t\t\tEntered Number: %s", numb_1);
 			printf("\n\t\tEnter to proceed with the number or any other key to tryAgain....");
@@ -107,7 +95,7 @@ void load_number(){
 				printf("\n\t\tEnter Again: ");
 			}
 		}else{
-			printf("\n\t\tWrong entry TryAgain[error code: %d]: ", number_check(1));
+			printf("\n\t\tWrong entry TryAgain[error code: %d]: ", temp_chek_code);
 		}
 	}
 	
@@ -115,7 +103,8 @@ void load_number(){
 	for(;;){
 		fflush(stdin);
 		scanf("%s", numb_2);
-		if(number_check(2)==1&& strlen(numb_2)>0){
+		temp_chek_code = number_check(numb_2);
+		if(temp_chek_code==1&& strlen(numb_2)>0){
 			printf("\n\n\t\t\t\t----   Verifying First Number   ----");
 			printf("\n\n\t\t\tEntered Number: %s", numb_2);
 			printf("\n\t\tEnter to proceed with the number or any other key to tryAgain....");
@@ -125,20 +114,79 @@ void load_number(){
 				printf("\n\t\tEnter Again: ");
 			}
 		}else{
-			printf("\n\t\tWrong entry TryAgain[error code: %d]: ", number_check(2));
+			printf("\n\t\tWrong entry TryAgain[error code: %d]: ", temp_chek_code);
 		}
 	}
 	
-	make_same_length();
+	binary_digit= make_same_length(numb_1, numb_2);
 }
 
-void binary_addition(){
+//adding two binary numbers......................................................................
+void binary_addition(char *number_to_add_1, char *number_to_add_2, char *result, int is_take_carry){
 	
-	int i;
+	if (strlen(number_to_add_1)!= strlen(number_to_add_2)){
+		binary_digit= make_same_length(numb_1, numb_2);
+	}
+	int i, length= strlen(number_to_add_1), result_travel_pointer;
+	char prev_carry= '0';
+	
+	if(is_take_carry== -1){
+			result_travel_pointer= length-1;
+	}else{
+		result_travel_pointer= length;
+	}
+	for(i= length-1; i>=0; i--){
+		if(number_to_add_1[i]== '0' && number_to_add_2[i]== '0'){
+			if(prev_carry== '0'){
+				result[result_travel_pointer--]= '0';
+			}else{
+				result[result_travel_pointer--]= prev_carry;
+			}
+			prev_carry= '0';
+		}else if(number_to_add_1[i]== '0' && number_to_add_2[i]== '1'){
+			if(prev_carry== '0'){
+				result[result_travel_pointer--]= '1';
+			}else{
+				result[result_travel_pointer--]= '0';
+				prev_carry= '1';
+			}
+		}else if(number_to_add_1[i]== '1' && number_to_add_2[i]== '1'){
+			if(prev_carry== '0'){
+				result[result_travel_pointer--]= '0';
+				prev_carry= '1';
+			}else{
+				result[result_travel_pointer--]= '1';
+				prev_carry= '1';
+			}
+		}else if(number_to_add_1[i]== '1' && number_to_add_2[i]== '0'){
+			if(prev_carry== '0'){
+				result[result_travel_pointer--]= '1';
+			}else{
+				result[result_travel_pointer--]= '0';
+				prev_carry= '1';
+			}
+		}
+	}
+	if(is_take_carry== -1){
+		result[length]= '\0';
+	}else{
+		result[0]= prev_carry;
+		result[length+1]= '\0';
+	}
+}
+
+void binary_addition_visual(){
+	
+	char result[binary_digit];
+	
 	system("cls");
 	printf("\n\n\n\t\t\t\t----   Binary Addition   ----");
+	binary_addition(numb_1, numb_2, result, 0);
 	
-	printf("\n\n\t\t\t%s + %s = %s", numb_1, numb_2, numb_add);
+	printf("\n\n\t\t\t\"%s\" added with \"%s\" equals \"%s\"", numb_1, numb_2, result);
+	
+	printf("\n\n\t\t\tPress any key to goBack..........");
+	getch();
 }
 
 void booths_multiplication(){
@@ -175,7 +223,7 @@ void main_menu(){
 				main_menu_display( 1);
 				break;
 			case '2':
-				binary_addition();
+				binary_addition_visual();
 				main_menu_display( 1);
 				break;
 			case '3':
