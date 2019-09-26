@@ -40,32 +40,36 @@ int number_check(char *number_to_check){
 	}
 }
 
-//making both the numbers same width..................................
-void make_same_length(){
+//changing the number to required length......................................................
+int change_numb_length(char *number_to_change, int length){
 	
-	int i, i_2;
-	if(strlen(numb_1)>strlen(numb_2)){
-		i_2= strlen(numb_2)-1;
-		for(i=strlen(numb_1)-1; i>=0; i--){
-			if(i_2>=0){
-				numb_2[i]= numb_2[i_2--];
-			}else{
-				numb_2[i]= '0';
-			}
+	int i, i_2, commited_change= 0;
+	
+	i_2= strlen(number_to_change);
+	for(i=length; i>=0; i--){
+		if(i_2>=0){
+			number_to_change[i]= number_to_change[i_2--];
+		}else{
+			number_to_change[i]= '0';
+			commited_change++;
 		}
-		numb_2[strlen(numb_1)]= '\0';
-		binary_digit= strlen(numb_1);
+	}
+	return commited_change;
+}
+
+//making both the numbers same width...........................................................
+int make_same_length(char *number_to_change_1, char *number_to_change_2){
+	
+	if(strlen(number_to_change_1)>strlen(number_to_change_2)){
+		
+		int greater_numb_length= strlen(number_to_change_1);
+		int commited_change;
+		
+		commited_change= change_numb_length(number_to_change_2, greater_numb_length);
+		binary_digit= greater_numb_length;
+		return commited_change;
 	}else{
-		i_2= strlen(numb_1)-1;
-		for(i=strlen(numb_2)-1; i>=0; i--){
-			if(i_2>=0){
-				numb_1[i]= numb_1[i_2--];
-			}else{
-				numb_1[i]= '0';
-			}
-		}
-		numb_1[strlen(numb_2)]= '\0';
-		binary_digit= strlen(numb_2);
+		make_same_length(number_to_change_2, number_to_change_1);
 	}
 }
 
@@ -80,7 +84,6 @@ void load_number(){
 	for(;;){
 		fflush(stdin);
 		scanf("%s", numb_1);
-		printf("\ncode cheaking 1....");
 		temp_chek_code = number_check(numb_1);
 		if(temp_chek_code==1&& strlen(numb_1)>0){
 			printf("\n\n\t\t\t\t----   Verifying First Number   ----");
@@ -115,7 +118,7 @@ void load_number(){
 		}
 	}
 	
-	make_same_length();
+	make_same_length(numb_1, numb_2);
 }
 
 void binary_addition(){
