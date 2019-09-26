@@ -40,7 +40,7 @@ int number_check(char *number_to_check){
 	}
 }
 
-//changing the number to required length......................................................
+//changing the number to required length[returns commited digit change length]......................................................
 int change_numb_length(char *number_to_change, int length){
 	
 	int i, i_2, commited_change= 0;
@@ -57,19 +57,19 @@ int change_numb_length(char *number_to_change, int length){
 	return commited_change;
 }
 
-//making both the numbers same width...........................................................
+//making both the numbers same width[returns the numbers length]...........................................................
 int make_same_length(char *number_to_change_1, char *number_to_change_2){
 	
 	if(strlen(number_to_change_1)>strlen(number_to_change_2)){
 		
 		int greater_numb_length= strlen(number_to_change_1);
-		int commited_change;
 		
-		commited_change= change_numb_length(number_to_change_2, greater_numb_length);
-		binary_digit= greater_numb_length;
-		return commited_change;
+		change_numb_length(number_to_change_2, greater_numb_length);
+		return greater_numb_length;
+	}else if(strlen(number_to_change_1)!=strlen(number_to_change_2)){
+		return make_same_length(number_to_change_2, number_to_change_1);
 	}else{
-		make_same_length(number_to_change_2, number_to_change_1);
+		return strlen(number_to_change_1);
 	}
 }
 
@@ -118,15 +118,75 @@ void load_number(){
 		}
 	}
 	
-	make_same_length(numb_1, numb_2);
+	binary_digit= make_same_length(numb_1, numb_2);
 }
 
-void binary_addition(){
+//adding two binary numbers......................................................................
+void binary_addition(char *number_to_add_1, char *number_to_add_2, char *result, int is_take_carry){
 	
-	int i;
+	if (strlen(number_to_add_1)!= strlen(number_to_add_2)){
+		binary_digit= make_same_length(numb_1, numb_2);
+	}
+	int i, length= strlen(number_to_add_1), result_travel_pointer;
+	char prev_carry= '0';
+	
+	if(is_take_carry== -1){
+			result_travel_pointer= length-1;
+	}else{
+		result_travel_pointer= length;
+	}
+	for(i= length-1; i>=0; i--){
+		if(number_to_add_1[i]== '0' && number_to_add_2[i]== '0'){
+			if(prev_carry== '0'){
+				result[result_travel_pointer--]= '0';
+			}else{
+				result[result_travel_pointer--]= prev_carry;
+			}
+			prev_carry= '0';
+		}else if(number_to_add_1[i]== '0' && number_to_add_2[i]== '1'){
+			if(prev_carry== '0'){
+				result[result_travel_pointer--]= '1';
+			}else{
+				result[result_travel_pointer--]= '0';
+				prev_carry= '1';
+			}
+		}else if(number_to_add_1[i]== '1' && number_to_add_2[i]== '1'){
+			if(prev_carry== '0'){
+				result[result_travel_pointer--]= '0';
+				prev_carry= '1';
+			}else{
+				result[result_travel_pointer--]= '1';
+				prev_carry= '1';
+			}
+		}else if(number_to_add_1[i]== '1' && number_to_add_2[i]== '0'){
+			if(prev_carry== '0'){
+				result[result_travel_pointer--]= '1';
+			}else{
+				result[result_travel_pointer--]= '0';
+				prev_carry= '1';
+			}
+		}
+	}
+	if(is_take_carry== -1){
+		result[length]= '\0';
+	}else{
+		result[0]= prev_carry;
+		result[length+1]= '\0';
+	}
+}
+
+void binary_addition_visual(){
+	
+	char result[binary_digit];
+	
 	system("cls");
 	printf("\n\n\n\t\t\t\t----   Binary Addition   ----");
+	binary_addition(numb_1, numb_2, result, 0);
 	
+	printf("\n\n\t\t\t\"%s\" added with \"%s\" equals \"%s\"", numb_1, numb_2, result);
+	
+	printf("\n\n\t\t\tPress any key to goBack..........");
+	getch();
 }
 
 void booths_multiplication(){
@@ -163,7 +223,7 @@ void main_menu(){
 				main_menu_display( 1);
 				break;
 			case '2':
-				binary_addition();
+				binary_addition_visual();
 				main_menu_display( 1);
 				break;
 			case '3':
