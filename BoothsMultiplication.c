@@ -100,7 +100,7 @@ void twos_completement(char *number_to_change, char *changed_number_store){
 char binary_addition(char *number_to_add_1, char *number_to_add_2, char *result, int is_take_carry){
 	
 	if (strlen(number_to_add_1)!= strlen(number_to_add_2)){
-		binary_digit= make_same_length(numb_1, numb_2);
+		binary_digit= make_same_length(number_to_add_1, number_to_add_2);
 	}
 	int i, length= strlen(number_to_add_1), result_travel_pointer;
 	char prev_carry= '0';
@@ -154,7 +154,12 @@ char binary_addition(char *number_to_add_1, char *number_to_add_2, char *result,
 //for calculation tow's completement using substraction....................................................
 char binary_substraction(char *number_from_sub, char *number_to_sub, char *result, int is_sub_operation){
 	
+	if (strlen(number_from_sub)!= strlen(number_to_sub)){
+		binary_digit= make_same_length(number_from_sub, number_to_sub);
+	}
+	
 	char temp_completement[strlen(number_to_sub)], cary_generated;
+	
 	twos_completement(number_to_sub, temp_completement);
 	cary_generated= binary_addition(number_from_sub, temp_completement, result, -1);
 	if(cary_generated== '0' && is_sub_operation!= -1){
@@ -178,9 +183,34 @@ char binary_right_shift(char *number_to_change, char first_number){
 	return excluding_rightmost;
 }
 
-void booths_multiplication(){
-	printf("Booths Multiplication");
-	getch();
+char booths_multiplication(char *multiplicant, char *multipliar, char *result){
+	
+	if (strlen(multiplicant)!= strlen(multipliar)){
+		binary_digit= make_same_length(multiplicant, multipliar);
+	}
+	
+	int length= strlen(multiplicant), count;
+	char accumulator[length], Q[length], Qe= '0';
+	
+	strcpy(Q, multipliar);
+	strcpy(accumulator, "0");
+	change_numb_length(accumulator, length);
+	
+	for(count= length-1; count>= 0; count--){
+		if(Q[length-1]== '1' && Qe== '0'){
+			binary_substraction(accumulator, multiplicant, accumulator, -1);
+		}else if(Q[length-1]== '0' && Qe== '1'){
+			binary_addition(accumulator, multiplicant, accumulator, -1);
+		}
+		Qe= binary_right_shift(Q, binary_right_shift(accumulator, accumulator[0]));//arithmatic shift right with (Accumulator, Q, Qe)
+	}
+	strcpy(result, accumulator);
+	strcat(result, Q);
+	if(result[0]== '1'){
+		twos_completement(result, result);
+		return '-';
+	}
+	return ' ';
 }
 
 //###############################################################    Functions for UI Support    #####################################################
@@ -276,7 +306,18 @@ void binary_substraction_visual(){
 	printf("\n\n\t\t\tPress any key to goBack..........");
 	getch();	
 }
-
+void booths_multiplication_visuual(){
+	char result[binary_digit], numb_sign;
+	
+	system("cls");
+	printf("\n\n\n\t\t\t\t----   Booths Multiplication   ----");
+	numb_sign= booths_multiplication(numb_1, numb_2, result);
+	
+	printf("\n\n\t\t\t\"%s\" Multiplied by \"%s\" equals to \"%c%s\"", numb_1, numb_2, numb_sign, result);
+	
+	printf("\n\n\t\t\tPress any key to goBack..........");
+	getch();
+}
 //main menu content display..................................................................
 void main_menu_display(int display_option){
 	
@@ -319,7 +360,7 @@ void main_menu(){
 				main_menu_display( 1);
 				break;
 			case '5':
-				booths_multiplication();
+				booths_multiplication_visuual();
 				main_menu_display( 1);
 				break;
 			case '6':
