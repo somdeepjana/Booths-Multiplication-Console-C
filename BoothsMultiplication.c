@@ -3,9 +3,6 @@
 #include<stdlib.h>
 #include<conio.h>
 
-int binary_digit= 0;
-char numb_1[20], numb_2[20], numb_add[8];
-
 //welcome scree credit printing...............................................................
 void welcome_creadit(){
 	
@@ -100,7 +97,7 @@ void twos_completement(char *number_to_change, char *changed_number_store){
 char binary_addition(char *number_to_add_1, char *number_to_add_2, char *result, int is_take_carry){
 	
 	if (strlen(number_to_add_1)!= strlen(number_to_add_2)){
-		binary_digit= make_same_length(number_to_add_1, number_to_add_2);
+		make_same_length(number_to_add_1, number_to_add_2);
 	}
 	int i, length= strlen(number_to_add_1), result_travel_pointer;
 	char prev_carry= '0';
@@ -155,7 +152,7 @@ char binary_addition(char *number_to_add_1, char *number_to_add_2, char *result,
 char binary_substraction(char *number_from_sub, char *number_to_sub, char *result, int is_sub_operation){
 	
 	if (strlen(number_from_sub)!= strlen(number_to_sub)){
-		binary_digit= make_same_length(number_from_sub, number_to_sub);
+		make_same_length(number_from_sub, number_to_sub);
 	}
 	
 	char temp_completement[strlen(number_to_sub)], cary_generated;
@@ -186,7 +183,7 @@ char binary_right_shift(char *number_to_change, char first_number){
 char booths_multiplication(char *multiplicant, char *multipliar, char *result){
 	
 	if (strlen(multiplicant)!= strlen(multipliar)){
-		binary_digit= make_same_length(multiplicant, multipliar);
+		make_same_length(multiplicant, multipliar);
 	}
 	
 	int length= strlen(multiplicant), count;
@@ -213,38 +210,32 @@ char booths_multiplication(char *multiplicant, char *multipliar, char *result){
 	return ' ';
 }
 
-//###############################################################    Functions for UI Support    #####################################################
+//###############################################################    Functions for UI Support(Visual)    #####################################################
 
 //for visualy represent two's completement.................................................
-void twos_completement_visual(){
+void twos_completement_visual(char *number_to_process, char *lable){
 	
-	char temp_first_numb[strlen(numb_1)], temp_second_numb[strlen(numb_2)];
+	char temp_first_numb[strlen(number_to_process)];
 	
-	system("cls");
-	printf("\n\n\n\t\t\t\t----   Two's Completement   ----");
-	twos_completement(numb_1, temp_first_numb);
-	printf("\n\n\t\t\t01. Two's Completement of \"%s\" is \"%s\"", numb_1, temp_first_numb);
-	twos_completement(numb_2, temp_second_numb);
-	printf("\n\t\t\t02. Two's Completement of \"%s\" is \"%s\"", numb_2, temp_second_numb);
-	printf("\n\n\t\t\tPlese Enter any key to GoBack..........");
-	getch();
+	printf("\n\n\n\t\t\t\t----   Two's Completement %s Number   ----", lable);
+	twos_completement(number_to_process, temp_first_numb);
+	printf("\n\n\t\t\t Two's Completement of \"%s\" is \"%s\"", number_to_process, temp_first_numb);
+	
 }
 
 //loading number into...........................................................................
-void load_number(){
+void load_number(char *number_to_load, char *lable){
 	
 	int temp_chek_code;
-	
-	system("cls");
-	printf("\n\n\n\t\t\t\t----   Loading Binary Number   ----");
-	printf("\n\n\t\t01. Enter the First Number: ");
+	printf("\n\n\n\t\t\t\t----   Loading %s Binary Number   ----", lable);
+	printf("\n\n\t\tEnter the Number: ");
 	for(;;){
 		fflush(stdin);
-		scanf("%s", numb_1);
-		temp_chek_code = number_check(numb_1);
-		if(temp_chek_code==1&& strlen(numb_1)>0){
-			printf("\n\n\t\t\t\t----   Verifying First Number   ----");
-			printf("\n\n\t\t\tEntered Number: %s", numb_1);
+		scanf("%s", number_to_load);
+		temp_chek_code = number_check(number_to_load);
+		if(temp_chek_code==1&& strlen(number_to_load)>0){
+			printf("\n\n\t\t\t\t----   Verifying %s Number   ----", lable);
+			printf("\n\n\t\t\tEntered Number: %s", number_to_load);
 			printf("\n\t\tEnter to proceed with the number or any other key to tryAgain....");
 			if(getch()== '\r'){
 				break;
@@ -255,119 +246,149 @@ void load_number(){
 			printf("\n\t\tWrong entry TryAgain[error code: %d]: ", temp_chek_code);
 		}
 	}
-	
-	printf("\n\n\t\t02. Enter the Second Number: ");
-	for(;;){
-		fflush(stdin);
-		scanf("%s", numb_2);
-		temp_chek_code = number_check(numb_2);
-		if(temp_chek_code==1&& strlen(numb_2)>0){
-			printf("\n\n\t\t\t\t----   Verifying Second Number   ----");
-			printf("\n\n\t\t\tEntered Number: %s", numb_2);
-			printf("\n\t\tEnter to proceed with the number or any other key to tryAgain....");
-			if(getch()== '\r'){
-				break;
-			}else{
-				printf("\n\t\tEnter Again: ");
-			}
-		}else{
-			printf("\n\t\tWrong entry TryAgain[error code: %d]: ", temp_chek_code);
-		}
-	}
-	
-	binary_digit= make_same_length(numb_1, numb_2);
 }
 
 //for printing on the screen about the addition output
-void binary_addition_visual(){
+void binary_addition_visual(char *first_number, char *second_number, char *lable){
 	
-	char result[binary_digit];
+	char result[(strlen(first_number)>=strlen(second_number)) ? strlen(first_number) : strlen(second_number)];
 	
-	system("cls");
-	printf("\n\n\n\t\t\t\t----   Binary Addition   ----");
-	binary_addition(numb_1, numb_2, result, 0);
+	printf("\n\n\n\t\t\t\t----   Binary Addition for %s Number   ----", lable);
+	binary_addition(first_number, second_number, result, 0);
 	
-	printf("\n\n\t\t\t\"%s\" added with \"%s\" equals \"%s\"", numb_1, numb_2, result);
-	
-	printf("\n\n\t\t\tPress any key to goBack..........");
-	getch();
+	printf("\n\n\t\t\t\"%s\" added with \"%s\" equals \"%s\"", first_number, second_number, result);
 }
 
 //for visually represent binary substraction using twos completement...................................
-void binary_substraction_visual(){
-	char result[binary_digit], numb_sign;
+void binary_substraction_visual(char *first_number, char *second_number, char *lable){
+	char result[(strlen(first_number)>=strlen(second_number)) ? strlen(first_number) : strlen(second_number)], numb_sign;
 	
-	system("cls");
-	printf("\n\n\n\t\t\t\t----   Binary Subtraction   ----");
-	numb_sign= binary_substraction(numb_1, numb_2, result, 0);
+	printf("\n\n\n\t\t\t\t----   Binary Subtraction for %s Number   ----", lable);
+	numb_sign= binary_substraction(first_number, second_number, result, 0);
 	
-	printf("\n\n\t\t\t\"%s\" Substracted from \"%s\" equals to \"%c%s\"", numb_2, numb_1, numb_sign, result);
-	
-	printf("\n\n\t\t\tPress any key to goBack..........");
-	getch();	
+	printf("\n\n\t\t\t\"%s\" Substracted from \"%s\" equals to \"%c%s\"", first_number, second_number, numb_sign, result);	
 }
-void booths_multiplication_visuual(){
-	char result[binary_digit], numb_sign;
+void booths_multiplication_visuual(char *first_number, char *second_number, char *lable){
+	char result[(strlen(first_number)>=strlen(second_number)) ? strlen(first_number) : strlen(second_number)], numb_sign;
+
+	printf("\n\n\n\t\t\t\t----   Booths Multiplication for %s Numbers   ----", lable);
+	numb_sign= booths_multiplication(first_number, second_number, result);
 	
-	system("cls");
-	printf("\n\n\n\t\t\t\t----   Booths Multiplication   ----");
-	numb_sign= booths_multiplication(numb_1, numb_2, result);
-	
-	printf("\n\n\t\t\t\"%s\" Multiplied by \"%s\" equals to \"%c%s\"", numb_1, numb_2, numb_sign, result);
-	
-	printf("\n\n\t\t\tPress any key to goBack..........");
-	getch();
+	printf("\n\n\t\t\t\"%s\" Multiplied by \"%s\" equals to \"%c%s\"", first_number, second_number, numb_sign, result);
 }
+
+//#########################################################################    Menu Driven Functions(Display)    ##########################################
+
 //main menu content display..................................................................
-void main_menu_display(int display_option){
+void main_menu_display(int display_option, char *number_to_display_1, char *number_to_display_2){
 	
+	int binary_digit= (strlen(number_to_display_1)>=strlen(number_to_display_2)) ? strlen(number_to_display_1) : strlen(number_to_display_2);
 	system("cls");
 	printf("\n\n\n\t\t\t\t----   Operations On Binary[Operation Width: %d]   ----", binary_digit);
 	if(binary_digit> 0){
-		printf("\n\n\tBinary Number 1: %s\t\t\t\t\t\t\tBinary Number 2: %s", numb_1, numb_2);
+		printf("\n\n\tBinary Number 1: %s\t\t\t\t\t\t\tBinary Number 2: %s", number_to_display_1, number_to_display_2);
 	}
 	printf("\n\n\t\t\t01. Load Number\t\t\t\t\t02. Binary Addition");
 	printf("\n\t\t\t03. Binary Substraction\t\t\t\t04. Two\'s Completement");
 	printf("\n\t\t\t05. Bootrh's Multiplication\t\t\t06. Exit");
 	if(display_option==1){
-		printf("\n\n\t\t\tPlease Choose a Option: ");
+		printf("\n\n\t\tPlease Choose a Option: ");
 	}else if(display_option==2){
-		printf("\n\n\t\t\tWrong option try again: ");
+		printf("\n\n\t\tWrong option try again: ");
 	}
 }
 
 //Main Menu to deside where to go.............................................................
 void main_menu(){
 	
-	main_menu_display( 1);
+	char numb_1[20], numb_2[20], temp_number_1[20], temp_number_2[20];
+	system("cls");
+	strcpy(numb_1, "");
+	strcpy(numb_2, "");
+	main_menu_display( 1, numb_1, numb_2);
 	
 	for(;;){
 		switch(getch()){
 			case '1':
-				load_number();
-				main_menu_display( 1);
+				system("cls");
+				load_number(numb_1, "First");
+				load_number(numb_2, "Second");
+				make_same_length(numb_1, numb_2);
+				main_menu_display( 1, numb_1, numb_2);
 				break;
 			case '2':
-				binary_addition_visual();
-				main_menu_display( 1);
+				system("cls");
+				binary_addition_visual(numb_1, numb_2, "Primary");
+				for(;;){
+					printf("\n\n\n\t\tPress Enter to GoBack or any other key to try Temporal Number..........");
+					if(getch()!= '\r'){
+						system("cls");
+						load_number(temp_number_1, "Temporal 1");
+						load_number(temp_number_2, "Temporal 2");
+						system("cls");
+						binary_addition_visual(temp_number_1, temp_number_2, "Temporal");
+					}else{
+						break;
+					}
+				}
+				main_menu_display( 1, numb_1, numb_2);
 				break;
 			case '3':
-				binary_substraction_visual();
-				main_menu_display( 1);
+				system("cls");
+				binary_substraction_visual(numb_1, numb_2, "Primary");
+				for(;;){
+					printf("\n\n\n\t\tPress Enter to GoBack or any other key to try Temporal Number..........");
+					if(getch()!= '\r'){
+						system("cls");
+						load_number(temp_number_1, "Temporal 1");
+						load_number(temp_number_2, "Temporal 2");
+						system("cls");
+						binary_substraction_visual(temp_number_1, temp_number_2, "Temporal");
+					}else{
+						break;
+					}
+				}
+				main_menu_display( 1, numb_1, numb_2);
 				break;
 			case '4':
-				twos_completement_visual();
-				main_menu_display( 1);
+				system("cls");
+				twos_completement_visual(numb_1, "First");
+				twos_completement_visual(numb_2, "Second");
+				for(;;){
+					printf("\n\n\n\t\tPress Enter to GoBack or any other key to try a Temporal Number..........");
+					if(getch()!= '\r'){
+						system("cls");
+						load_number(temp_number_1, "Temporal");
+						system("cls");
+						twos_completement_visual(temp_number_1, "Temporal");
+					}else{
+						break;
+					}
+				}
+				main_menu_display( 1, numb_1, numb_2);
 				break;
 			case '5':
-				booths_multiplication_visuual();
-				main_menu_display( 1);
+				system("cls");
+				booths_multiplication_visuual(numb_1, numb_2, "Primary");
+				for(;;){
+					printf("\n\n\n\t\tPress Enter to GoBack or any other key to try Temporal Number..........");
+					if(getch()!= '\r'){
+						system("cls");
+						load_number(temp_number_1, "Temporal 1");
+						load_number(temp_number_2, "Temporal 2");
+						system("cls");
+						booths_multiplication_visuual(temp_number_1, temp_number_2, "Temporal");
+					}else{
+						break;
+					}
+				}
+				main_menu_display( 1, numb_1, numb_2);
 				break;
 			case '6':
 				exit(0);
 				break;
 			default:
-				main_menu_display( 2);
+				main_menu_display( 2, numb_1, numb_2);
 				
 		}
 	}
@@ -377,7 +398,10 @@ void main_menu(){
 int main(int argc, char const *argv[]) {
 	
 	welcome();
-	load_number();
+	//system("cls");
+	//load_number(numb_1, "First");
+	//load_number(numb_2, "Second");
+	//make_same_length(numb_1, numb_2);
 	main_menu();
 	return 0;
 }
