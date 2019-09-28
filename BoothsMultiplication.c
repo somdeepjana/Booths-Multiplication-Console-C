@@ -59,15 +59,14 @@ void about(){
 	printf("         04. Booth's Multiplication.\n");
 	printf("         05. Command Line Tools.\n\n");
 	printf("   |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~     |");
-	getch();
 	
 }
 
 void welcome(){
 	hello();
 	about();
-	printf("\n\n\n\t\tPlease enter any key to continue......");
 	getch();
+	system("COLOR 07");
 }
 //##################################################    Functions for basic operations    ################################################################
 
@@ -275,6 +274,7 @@ void twos_completement_visual(char *number_to_process, char *lable){
 
 //loading number into...........................................................................
 void load_number(char *number_to_load, char *lable){
+	SetConsoleTitle("BinaryOperation @ Loading Number");
 	
 	int temp_chek_code;
 	printf("\n\n\n\t\t\t\t\033[1;36m----   Loading \033[0;33m%s \033[1;36mBinary Number   ----", lable);
@@ -312,6 +312,7 @@ void binary_addition_visual(char *first_number, char *second_number, char *lable
 
 //for visually represent binary substraction using twos completement...................................
 void binary_substraction_visual(char *first_number, char *second_number, char *lable){
+	
 	char result[(strlen(first_number)>=strlen(second_number)) ? strlen(first_number) : strlen(second_number)], numb_sign;
 	
 	printf("\n\n\n\t\t\t\t\033[1;36m----   Binary Subtraction for \033[0;33m%s \033[1;36mNumber   ----", lable);
@@ -354,6 +355,7 @@ void optional_color_change(char *checking_array, int first_condition, char *firs
 
 //main menu content display..................................................................
 void main_menu_display(int display_option, char *number_to_display_1, char *number_to_display_2, char *visited_options){
+	SetConsoleTitle("BinaryOperation @ MainMenu");
 	
 	int binary_digit= (strlen(number_to_display_1)>=strlen(number_to_display_2)) ? strlen(number_to_display_1) : strlen(number_to_display_2);
 	system("cls");
@@ -406,6 +408,7 @@ void main_menu(){
 				if(0== ((strlen(numb_1)>=strlen(numb_2)) ? strlen(numb_1) : strlen(numb_2))){
 					goto lable_no_data_addition;
 				}
+				SetConsoleTitle("BinaryOperation @ Primary Addition");
 				strcat(options_visited, "a");
 				system("cls");
 				binary_addition_visual(numb_1, numb_2, "Primary");
@@ -416,6 +419,7 @@ lable_no_data_addition:
 						system("cls");
 						load_number(temp_number_1, "Temporal 1");
 						load_number(temp_number_2, "Temporal 2");
+						SetConsoleTitle("BinaryOperation @ Binary Addition");
 						system("cls");
 						binary_addition_visual(temp_number_1, temp_number_2, "Temporal");
 					}else{
@@ -428,6 +432,7 @@ lable_no_data_addition:
 				if(0== ((strlen(numb_1)>=strlen(numb_2)) ? strlen(numb_1) : strlen(numb_2))){
 					goto lable_no_data_substraction;
 				}
+				SetConsoleTitle("BinaryOperation @ Primary Substraction");
 				strcat(options_visited, "s");
 				system("cls");
 				binary_substraction_visual(numb_1, numb_2, "Primary");
@@ -439,6 +444,7 @@ lable_no_data_substraction:
 						load_number(temp_number_1, "Temporal 1");
 						load_number(temp_number_2, "Temporal 2");
 						system("cls");
+						SetConsoleTitle("BinaryOperation @ Binary Substraction");
 						binary_substraction_visual(temp_number_1, temp_number_2, "Temporal");
 					}else{
 						break;
@@ -450,6 +456,7 @@ lable_no_data_substraction:
 				if(0== ((strlen(numb_1)>=strlen(numb_2)) ? strlen(numb_1) : strlen(numb_2))){
 					goto lable_no_data_2scompletement;
 				}
+				SetConsoleTitle("BinaryOperation @ Primary Tow's Complement");
 				strcat(options_visited, "t");
 				system("cls");
 				twos_completement_visual(numb_1, "First");
@@ -461,6 +468,7 @@ lable_no_data_2scompletement:
 						system("cls");
 						load_number(temp_number_1, "Temporal");
 						system("cls");
+						SetConsoleTitle("BinaryOperation @ Binary Tow's Complement");
 						twos_completement_visual(temp_number_1, "Temporal");
 					}else{
 						break;
@@ -472,6 +480,7 @@ lable_no_data_2scompletement:
 				if(0== ((strlen(numb_1)>=strlen(numb_2)) ? strlen(numb_1) : strlen(numb_2))){
 					goto lable_no_data_boothsmulti;
 				}
+				SetConsoleTitle("BinaryOperation @ Primary Booth's Multiplication");
 				strcat(options_visited, "b");
 				system("cls");
 				booths_multiplication_visuual(numb_1, numb_2, "Primary");
@@ -483,6 +492,7 @@ lable_no_data_boothsmulti:
 						load_number(temp_number_1, "Temporal 1");
 						load_number(temp_number_2, "Temporal 2");
 						system("cls");
+						SetConsoleTitle("BinaryOperation @ Binary Booth's Multiplication");
 						booths_multiplication_visuual(temp_number_1, temp_number_2, "Temporal");
 					}else{
 						break;
