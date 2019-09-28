@@ -38,7 +38,6 @@ void hello(){
 //welcome scree credit printing...............................................................
 void about(){
 	SetConsoleTitle("BinaryOperation @ About");
-	system("cls");
 	system("COLOR 0E");
 	printf("\n\n   |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~           [ ABOUT ]          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~     |\n\n");
 	printf("         PROJECT NAME: Booth's Multiplication.\n");
@@ -64,6 +63,7 @@ void about(){
 
 void welcome(){
 	hello();
+	system("cls");
 	about();
 	getch();
 	system("COLOR 07");
@@ -560,7 +560,13 @@ lable_no_data_boothsmulti:
 //Main function runs first......................................................................
 int main(int argc, char const *argv[]) {
 	
-	welcome();
-	main_menu();
-	return 0;
+	if(argc< 2){
+		welcome();
+		main_menu();
+	}else{
+		printf("Command Line Argument....");
+		getch();
+	}
+	
+return 0;
 }
