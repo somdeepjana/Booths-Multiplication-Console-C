@@ -344,7 +344,7 @@ void binary_substraction_visual(char *first_number, char *second_number, char *l
 	}
 	numb_sign= binary_substraction(first_number, second_number, result, 0);
 	
-	printf("\n\n\033[1;32m   |     \"%s\" \033[0;33mSubstracted from \033[1;32m\"%s\"\033[0;33m equals to \033[1;32m\"%c%s\"\033[0m", first_number, second_number, numb_sign, result);	
+	printf("\n\n\033[1;32m   |     \"%s\" \033[0;33mSubstracted from \033[1;32m\"%s\"\033[0;33m equals to \033[1;32m\"%c%s\"\033[0m", second_number, first_number, numb_sign, result);	
 }
 void booths_multiplication_visuual(char *first_number, char *second_number, char *lable){
 	char result[(strlen(first_number)>=strlen(second_number)) ? strlen(first_number) : strlen(second_number)], numb_sign;
@@ -559,13 +559,64 @@ lable_no_data_boothsmulti:
 
 //Main function runs first......................................................................
 int main(int argc, char const *argv[]) {
+	char first_number[20], second_number[20], temporal_result[20], nuumb_sign;
 	
 	if(argc< 2){
 		welcome();
 		main_menu();
+	}else if(argc== 2){
+		if(strcmp(argv[1], "-a")== 0){
+			about();
+			system("COLOR 07");
+			
+		}else{
+			printf("ERROR: Command is not right tryAgain");
+		}
+	}else if(argc== 3){
+		if(strcmp(argv[1], "-tc")== 0){
+			strcpy(first_number, argv[2]);
+			if(number_check(first_number)== 1 && strlen(first_number)>0){
+				twos_completement(first_number, temporal_result);
+				printf("Two's Complement of \"%s\" is \"%s\"", first_number, temporal_result);
+			}else{
+				printf("ERROR: \"%s\" is not a Binary Number", first_number);
+			}
+		}else{
+			printf("ERROR: Command is not right tryAgain");
+		}
+	}else if(argc== 4){
+		if(strcmp(argv[1], "-ba")== 0){
+			strcpy(first_number, argv[2]);
+			strcpy(second_number, argv[3]);
+			if(number_check(first_number)== 1 && strlen(first_number)>0 && number_check(second_number)== 1 && strlen(second_number)>0){
+				binary_addition(first_number, second_number, temporal_result, 0);
+				printf("\"%s\" added with \"%s\" is equuals to \"%s\"", first_number, second_number, temporal_result);
+			}else{
+				printf("ERROR: \"%s\" or \"%s\" is not a Binary Number", first_number, second_number);
+			}
+		}else if(strcmp(argv[1], "-bs")== 0){
+			strcpy(first_number, argv[2]);
+			strcpy(second_number, argv[3]);
+			if(number_check(first_number)== 1 && strlen(first_number)>0 && number_check(second_number)== 1 && strlen(second_number)>0){
+				nuumb_sign= binary_substraction(first_number, second_number, temporal_result, 0);
+				printf("\"%s\" subtracted from \"%s\" is equuals to \"%c%s\"", second_number, first_number, nuumb_sign, temporal_result);
+			}else{
+				printf("ERROR: \"%s\" or \"%s\" is not a Binary Number", first_number, second_number);
+			}
+		}else if(strcmp(argv[1], "-bm")== 0){
+			strcpy(first_number, argv[2]);
+			strcpy(second_number, argv[3]);
+			if(number_check(first_number)== 1 && strlen(first_number)>0 && number_check(second_number)== 1 && strlen(second_number)>0){
+				nuumb_sign= booths_multiplication(first_number, second_number, temporal_result);
+				printf("\"%s\" Multiplied by \"%s\" is equuals to \"%c%s\"", first_number, second_number, nuumb_sign, temporal_result);
+			}else{
+				printf("ERROR: \"%s\" or \"%s\" is not a Binary Number", first_number, second_number);
+			}
+		}else{
+			printf("ERROR: Command is not right tryAgain");
+		}
 	}else{
-		printf("Command Line Argument....");
-		getch();
+		printf("ERROR: Too many unknown arguments");
 	}
 	
 return 0;
