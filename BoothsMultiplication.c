@@ -356,29 +356,45 @@ void optional_color_change(char *checking_array, int first_condition, char *firs
 //main menu content display..................................................................
 void main_menu_display(int display_option, char *number_to_display_1, char *number_to_display_2, char *visited_options){
 	SetConsoleTitle("BinaryOperation @ MainMenu");
-	
+	HWND wh = GetConsoleWindow();
+	MoveWindow(wh, 186.5, 124, 993, 518, TRUE);
 	int binary_digit= (strlen(number_to_display_1)>=strlen(number_to_display_2)) ? strlen(number_to_display_1) : strlen(number_to_display_2);
 	system("cls");
-	printf("\n\n\n\t\t\t\t\033[1;35m----   Operations On Binary[\033[0;36mOperation Width: %d\033[1;35m]   ----", binary_digit);
-	if(binary_digit> 0){
-		printf("\n\n\t\033[1;36mBinary Number 1: \033[0;33m%s\t\t\t\t\t\t\t\033[1;36mBinary Number 2: \033[0;33m%s", number_to_display_1, number_to_display_2);
-	}
 	
+	if(binary_digit> 0){
+		printf("\n\n\n\n\n\n\n");
+	}else{
+		printf("\n\n\n\n\n\n\n");
+	}
+	printf("\033[1;35m   |     ~~~~~~~~~~~~~~~~~~           Operations On Binary[ \033[0;36mOperation Width: %d\033[1;35m ]           ~~~~~~~~~~~~~~~~~~     |", binary_digit);
+	if(binary_digit> 0){
+		printf("\n\n");
+		printf("         \033[1;36mBinary Number 1: \033[0;33m%s\n         \033[1;36mBinary Number 2: \033[0;33m%s\n\n", number_to_display_1, number_to_display_2);
+		printf("\033[1;35m   |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~     |\n\n");
+	}else{
+		printf("\n\n\n\n");
+	}
 	optional_color_change( visited_options, binary_digit, "\033[1;32m", "\033[0;32m", 'l', "\033[1;33m");
-	printf("\n\n\n\t\t\t01. Load Number\t\t\t\t\t");
+	printf("         01. Load Number");
 	optional_color_change( visited_options, binary_digit, "\033[1;31m", "\033[0;32m", 'a', "\033[1;33m");
-	printf("02. Binary Addition");
+	printf("                                                               02.    Binary Addition\n");
 	optional_color_change( visited_options, binary_digit, "\033[1;31m", "\033[0;32m", 's', "\033[1;33m");
-	printf("\n\t\t\t03. Binary Substraction\t\t\t\t");
+	printf("         03. Binary Substraction");
 	optional_color_change( visited_options, binary_digit, "\033[1;31m", "\033[0;32m", 't', "\033[1;33m");
-	printf("04. Two\'s Completement");
+	printf("                                                       04. Two\'s Completement\n");
 	optional_color_change( visited_options, binary_digit, "\033[1;31m", "\033[0;32m", 'b', "\033[1;33m");
-	printf("\n\t\t\t05. Bootrh's Multiplication\t\t\t");
-	printf("\033[0;31m06. Exit");
+	printf("         05. Bootrh's Multiplication");
+	printf("\033[0;31m                                                   06.               Exit");
+	if(binary_digit> 0){
+		printf("\n\n");
+	}else{
+		printf("\n\n\n\n");
+	}
+	printf("\033[1;35m   |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~     |\n\n\n");
 	if(display_option==1){
-		printf("\n\n\n\t\t\033[0;32mPlease Choose a Option: ");
+		printf("\033[0;32m   |     Choose a Opton: ");
 	}else if(display_option==2){
-		printf("\n\n\n\t\t\033[0;33mWrong option try again: ");
+		printf("\033[0;33m   |     Wrong Option Try Again: ");
 	}
 	printf("\033[0m");
 }
@@ -504,7 +520,7 @@ lable_no_data_boothsmulti:
 				exit(0);
 				break;
 			default:
-				main_menu_display( 1, numb_1, numb_2, options_visited);
+				main_menu_display( 2, numb_1, numb_2, options_visited);
 				
 		}
 	}
