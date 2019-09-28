@@ -266,9 +266,14 @@ void twos_completement_visual(char *number_to_process, char *lable){
 	
 	char temp_first_numb[strlen(number_to_process)];
 	
-	printf("\n\n\n\t\t\t\t\033[1;36m----   Two's Completement \033[0;33m%s \033[1;36mNumber   ----", lable);
+	printf("\n\n\n\033[1;36m   |     ~~~~~~~~~~~~~~~~~~~~~~~           Two's Completement \033[0;33m%s \033[1;36mNumber            ~~~~~~~~~~~~~~~~~~~~~~", lable);
+	if(strlen(lable)>5){
+		printf("     |\n");
+	}else{
+		printf("~     |\n");
+	}
 	twos_completement(number_to_process, temp_first_numb);
-	printf("\n\n\n\t\t\t\033[0;33m Two's Completement of \033[1;32m\"%s\" \033[0;33mis \033[1;32m\"%s\"\033[0m", number_to_process, temp_first_numb);
+	printf("\n\n\033[0;33m   |     Two's Completement of \033[1;32m\"%s\" \033[0;33mis \033[1;32m\"%s\"\033[0m", number_to_process, temp_first_numb);
 	
 }
 
@@ -277,24 +282,35 @@ void load_number(char *number_to_load, char *lable){
 	SetConsoleTitle("BinaryOperation @ Loading Number");
 	
 	int temp_chek_code;
-	printf("\n\n\n\t\t\t\t\033[1;36m----   Loading \033[0;33m%s \033[1;36mBinary Number   ----", lable);
-	printf("\n\n\t\t\033[0;33mEnter the Number: \033[1;32m");
+	
+	printf("\n\n\033[1;36m   |     ~~~~~~~~~~~~~~~~~~~~~~~~~            Loading \033[0;33m%s \033[1;36mBinary Number           ~~~~~~~~~~~~~~~~~~~~~~~~", lable);
+	if(strlen(lable)>5){
+		printf("     |\n");
+	}else{
+		printf("~     |\n");
+	}
+	printf("\n\n\033[0;33m   |     Enter the Number: \033[1;32m");
 	for(;;){
 		fflush(stdin);
 		scanf("%s", number_to_load);
 		temp_chek_code = number_check(number_to_load);
 		if(temp_chek_code==1&& strlen(number_to_load)>0){
-			printf("\n\n\t\t\t\t\033[0;33m----   Verifying \033[1;32m%s \033[0;33mNumber   ----", lable);
-			printf("\n\n\t\t\t\033[1;36mEntered Number: \033[0;33m%s", number_to_load);
-			printf("\n\n\t\t\033[1;34mEnter to proceed with the number or any other key to tryAgain....");
+			printf("\n\n\033[0;33m   |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~            Verifying \033[1;32m%s \033[0;33mNumber            ~~~~~~~~~~~~~~~~~~~~~~~~~~", lable);
+			if(strlen(lable)>5){
+				printf("     |\n");
+			}else{
+				printf("~     |\n");
+			}
+			printf("\n\033[1;36m   |     Entered Number: \033[0;33m%s", number_to_load);
+			printf("\n\n\033[1;34m   |     Enter to proceed with the number or any other key to tryAgain: ");
 			if(getch()== '\r'){
 				printf("\033[0m");
 				break;
 			}else{
-				printf("\n\n\t\t\033[0;33mEnter Again: \033[1;32m");
+				printf("\n\n\033[0;33m   |     Enter Again: \033[1;32m");
 			}
 		}else{
-			printf("\n\t\t\033[0;35mWrong entry TryAgain[error code: %d]: \033[0;33m", temp_chek_code);
+			printf("\n\033[0;35m   |     Wrong entry TryAgain[error code: %d]: \033[0;33m", temp_chek_code);
 		}
 	}
 }
@@ -304,29 +320,44 @@ void binary_addition_visual(char *first_number, char *second_number, char *lable
 	
 	char result[(strlen(first_number)>=strlen(second_number)) ? strlen(first_number) : strlen(second_number)];
 	
-	printf("\n\n\n\t\t\t\t\033[1;36m----   Binary Addition for \033[0;33m%s \033[1;36mNumber   ----", lable);
+	printf("\n\n\n\033[1;36m   |     ~~~~~~~~~~~~~~~~~~~~~~~           Binary Addition for \033[0;33m%s \033[1;36mNumber            ~~~~~~~~~~~~~~~~~~~~~~", lable);
+	if(strlen(lable)>5){
+		printf("     |\n");
+	}else{
+		printf("~     |\n");
+	}
 	binary_addition(first_number, second_number, result, 0);
 	
-	printf("\n\n\t\t\t\033[1;32m\"%s\" \033[0;33madded with \033[1;32m\"%s\" \033[0;33mequals \033[1;32m\"%s\"\033[0m", first_number, second_number, result);
+	printf("\n\n\033[1;32m   |     \"%s\" \033[0;33madded with \033[1;32m\"%s\" \033[0;33mequals \033[1;32m\"%s\"\033[0m", first_number, second_number, result);
 }
 
 //for visually represent binary substraction using twos completement...................................
 void binary_substraction_visual(char *first_number, char *second_number, char *lable){
 	
 	char result[(strlen(first_number)>=strlen(second_number)) ? strlen(first_number) : strlen(second_number)], numb_sign;
-	
-	printf("\n\n\n\t\t\t\t\033[1;36m----   Binary Subtraction for \033[0;33m%s \033[1;36mNumber   ----", lable);
+
+	printf("\n\n\n\033[1;36m   |     ~~~~~~~~~~~~~~~~~~~~~~           Binary Subtraction for \033[0;33m%s \033[1;36mNumber          ~~~~~~~~~~~~~~~~~~~~~~", lable);
+	if(strlen(lable)>5){
+		printf("     |\n");
+	}else{
+		printf("~     |\n");
+	}
 	numb_sign= binary_substraction(first_number, second_number, result, 0);
 	
-	printf("\n\n\t\t\t\033[1;32m\"%s\" \033[0;33mSubstracted from \033[1;32m\"%s\"\033[0;33m equals to \033[1;32m\"%c%s\"\033[0m", first_number, second_number, numb_sign, result);	
+	printf("\n\n\033[1;32m   |     \"%s\" \033[0;33mSubstracted from \033[1;32m\"%s\"\033[0;33m equals to \033[1;32m\"%c%s\"\033[0m", first_number, second_number, numb_sign, result);	
 }
 void booths_multiplication_visuual(char *first_number, char *second_number, char *lable){
 	char result[(strlen(first_number)>=strlen(second_number)) ? strlen(first_number) : strlen(second_number)], numb_sign;
 
-	printf("\n\n\n\t\t\t\t\033[1;36m----   Booths Multiplication for \033[0;33m%s \033[1;36mNumbers   ----", lable);
+	printf("\n\n\n\033[1;36m   |     ~~~~~~~~~~~~~~~~~~~~~          Booths Multiplication for \033[0;33m%s \033[1;36mNumbers          ~~~~~~~~~~~~~~~~~~~~~", lable);
+	if(strlen(lable)>5){
+		printf("     |\n");
+	}else{
+		printf("~     |\n");
+	}
 	numb_sign= booths_multiplication(first_number, second_number, result);
 	
-	printf("\n\n\t\t\t\033[1;32m\"%s\" \033[0;33mMultiplied by \033[1;32m\"%s\" \033[0;33mequals to \033[1;32m\"%c%s\"\033[0m", first_number, second_number, numb_sign, result);
+	printf("\n\n\033[1;32m   |     \"%s\" \033[0;33mMultiplied by \033[1;32m\"%s\" \033[0;33mequals to \033[1;32m\"%c%s\"\033[0m", first_number, second_number, numb_sign, result);
 }
 
 int is_contain(char *search_array, char to_search){
@@ -429,7 +460,7 @@ void main_menu(){
 				system("cls");
 				binary_addition_visual(numb_1, numb_2, "Primary");
 				for(;;){
-					printf("\n\n\n\t\t\033[1;34mPress Enter to GoBack or any other key to try Temporal Number..........\033[0m");
+					printf("\n\n\n\033[1;34m   |     Press Enter to GoBack or any other key to try Temporal Number..........\033[0m");
 					if(getch()!= '\r'){
 lable_no_data_addition:
 						system("cls");
@@ -453,7 +484,7 @@ lable_no_data_addition:
 				system("cls");
 				binary_substraction_visual(numb_1, numb_2, "Primary");
 				for(;;){
-					printf("\n\n\n\t\t\033[1;34mPress Enter to GoBack or any other key to try Temporal Number..........\033[0m");
+					printf("\n\n\n\033[1;34m   |     Press Enter to GoBack or any other key to try Temporal Number..........\033[0m");
 					if(getch()!= '\r'){
 lable_no_data_substraction:
 						system("cls");
@@ -478,7 +509,7 @@ lable_no_data_substraction:
 				twos_completement_visual(numb_1, "First");
 				twos_completement_visual(numb_2, "Second");
 				for(;;){
-					printf("\n\n\n\t\t\033[1;34mPress Enter to GoBack or any other key to try a Temporal Number..........\033[0m");
+					printf("\n\n\n\033[1;34m   |     Press Enter to GoBack or any other key to try a Temporal Number:\033[0m");
 					if(getch()!= '\r'){
 lable_no_data_2scompletement:
 						system("cls");
@@ -501,7 +532,7 @@ lable_no_data_2scompletement:
 				system("cls");
 				booths_multiplication_visuual(numb_1, numb_2, "Primary");
 				for(;;){
-					printf("\n\n\n\t\t\033[1;34mPress Enter to GoBack or any other key to try Temporal Number..........\033[0m");
+					printf("\n\n\n\033[1;34m   |     Press Enter to GoBack or any other key to try Temporal Number..........\033[0m");
 					if(getch()!= '\r'){
 lable_no_data_boothsmulti:
 						system("cls");
